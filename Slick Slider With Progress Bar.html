@@ -1,0 +1,450 @@
+<div class="resource-main">
+  <div class="content-wrapper">
+    <div class="resource-inner">
+      <div class="title">
+        {{ module.title }}
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+          <span class="slider__label sr-only"> </span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="slider">
+          {% for item in module.add_slider_image %}
+          <div class="image">
+            {% if item.image.src %}
+            {% set sizeAttrs = 'width="{{ item.image.width }}" height="{{ item.image.height }}"' %}
+            {% if item.image.size_type == 'auto' %}
+            {% set sizeAttrs = 'width="{{ item.image.width }}" height="{{ item.image.height }}" style="max-width: 100%; height: auto;"' %}
+            {% elif item.image.size_type == 'auto_custom_max' %}
+            {% set sizeAttrs = 'width="{{ item.image.max_width }}" height="{{ item.image.max_height }}" style="max-width: 100%; height: auto;"' %}
+            {% endif %}
+            {% set loadingAttr = item.image.loading != 'disabled' ? 'loading="{{ item.image.loading }}"' : '' %}
+            <img src="{{ item.image.src }}" alt="{{ item.image.alt }}" {{ loadingAttr }} {{ sizeAttrs }}>
+            {% endif %}
+            <div class="title-text">
+              {{ item.title_text }}
+            </div>
+          </div> 
+          {% endfor %}
+        </div> 
+
+      </div> 
+    </div>
+  </div>
+</div>
+
+
+<style>
+
+
+/* slider css */
+ 
+
+.progress {
+    display: block;
+    width: 100%;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    
+  
+    background-image: linear-gradient(to right, red, black);
+    background-repeat: no-repeat;
+    background-size: 0 100%;
+    
+    transition: background-size .4s ease-in-out;
+  }
+  
+  
+  
+  
+  /**
+   *  Demo Styles from the Slick Slider
+   *  website
+   */
+  
+  
+  
+  .content {
+    margin: auto;
+    padding: 20px;
+    width: 600px;
+  }
+  
+  .slider {
+    margin: 30px auto 50px;
+  }
+  
+  .image {
+    padding: 10px;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+  .resource-inner {
+    display: flex;
+    max-width: 1630px;
+    margin: auto 0 auto auto;
+    padding: 0px 0px 0px 20px;
+}
+  .resource-main {
+      padding: 95px 0px 95px 15px;
+  }
+  .resource-inner .title h5 {
+      color: #F21749;
+      font-family: Source Sans Pro;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: capitalize;
+      margin-bottom: 1px;
+  }
+  
+  .resource-inner .title {
+      text-align: left;
+  }
+  .resource-inner h2 {
+      margin-bottom: 22px;
+      padding-bottom: 22px;
+  }
+  .resource-inner .title h2:before {
+      position: absolute;
+      content: '';
+      z-index: 2;
+      height: 1px;
+      background: #F21749;
+      width: 235px;
+      left: 0;
+      transform: inherit;
+      bottom: 0;
+  }
+  .resource-inner .title h2:after {
+      position: absolute;
+      content: '';
+      background: url(https://www.theadvocatecorner.com/hubfs/The%20Advocate%20Corner%20Website%20Assets/Homepage%20Assets/Images/Flower.svg) no-repeat;
+      background-position: center;
+      width: 29px;
+      height: 17px;
+      bottom: -5px;
+      left: 17%;
+      right: auto;
+      margin: auto;
+      background-color: #fff;
+      z-index: 2;
+      padding: 0 29px;
+  }
+  .resource-inner .title {
+      text-align: left;
+      max-width: 35%;
+      flex: 0 0 35%;
+  }
+  
+  .resource-inner .title-text p {
+      color: #6D6D6D;
+      font-family: Source Sans Pro;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: capitalize;
+  }
+  .resource-inner .title-text h3 {
+      color: #131313;
+      font-family: Source Sans Pro;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: capitalize;
+      margin: 0px !important;
+  }
+  .resource-inner .content {
+    flex: 100%;
+    max-width: 100%;
+    padding: 0px 0px 0px 140px;
+}
+  .resource-inner .slick-initialized .slick-slide img {
+      border-radius: 10px;
+      background: #FFF;
+      box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      height: 130px;
+      object-fit: contain;
+      margin-bottom: 25px;
+      width: 100%;
+  }
+  .resource-inner .title-text p {
+      color: #6D6D6D;
+      font-family: Source Sans Pro;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: capitalize;
+      margin-bottom: 5px;
+      min-height: 70px;
+  }
+  .resource-inner .title p {
+      color: #6D6D6D;
+      font-family: Source Sans Pro;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 38px;
+  }
+  .resource-inner .slider {
+      margin: 0px;
+  }
+  .progress {
+      width: 270px;
+      height: 5px;
+      background-color: #f2174924;
+        background-image: linear-gradient(90deg,rgba(250, 40, 90, 1),rgba(250, 40, 90, 1));
+  }
+  
+
+  .resource-inner button.slick-prev.slick-arrow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      background-image: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/Complete.png);
+      width: 30px;
+      height: 23px;
+      background-repeat: no-repeat;
+      background-size: 30px;
+  }
+  .resource-inner button.slick-next.slick-arrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    background-image: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/right.png);
+    width: 30px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-size: 30px;
+}
+.resource-inner button.slick-next.slick-arrow {
+    background-color: transparent;
+    border: 0;
+    bottom: 94px;
+    font-size: 0;
+    left: -180px;
+    padding: 0;
+    position: relative;
+}
+.resource-inner button.slick-prev.slick-arrow {
+    background-color: transparent;
+    border: 0;
+    font-size: 0;
+    left: -225px;
+    padding: 0;
+    position: relative;
+    top: 213px;
+}
+  .resource-main .content-wrapper {
+    max-width: 100%;
+    padding: 0px;
+}
+.resource-inner button.slick-next.slick-arrow.active-arrow:before {
+    background-image: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/active-right.png);
+}
+.resource-inner button.slick-prev.slick-arrow.active-arrow:before {
+    background-image: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/active-left.png);
+}
+
+@media(max-width: 1645px){
+    .resource-inner button.slick-next.slick-arrow{
+        bottom: 124px;
+    }
+}
+
+@media(max-width: 1410px){
+    .resource-inner button.slick-next.slick-arrow {
+        bottom: 107px;
+        left: -180px;
+    }
+    .resource-inner button.slick-prev.slick-arrow {
+        left: -130px;
+        top: 233px;
+    }
+
+
+}
+
+  @media only screen and (max-width: 1400px) {
+  
+    .resource-inner button.slick-prev.slick-arrow {
+        left: -180px;
+        top: 310px;
+    }
+    .resource-inner button.slick-next.slick-arrow {
+        bottom: 50px; 
+        font-size: 0;
+        
+        left: -130px;
+    }
+  }
+
+
+  @media only screen and (max-width: 1200px) {
+  .resource-inner .content {
+    flex: 100%;
+    max-width: 60%;
+    padding: 0 0 0 40px;
+}
+.resource-inner button.slick-prev.slick-arrow:before {
+    left: auto;
+    top: 0px;
+}
+.resource-inner button.slick-prev.slick-arrow {
+    bottom: 6px;
+    left: auto;
+    position: absolute;
+    top: auto;
+}
+.resource-inner button.slick-next.slick-arrow {
+    bottom: 0px;
+    left: 50px;
+    font-size: 0;
+    
+}
+
+
+  }
+  
+  @media only screen and (max-width: 1024px) {
+      
+  .resource-inner .title h2 {
+      font-size: 32px;
+      line-height: 40px;
+      margin-top: 10px;
+  }	
+  .resource-inner .title h2:after {
+      left: 25%;
+  }	
+  .resource-inner .title p {
+      font-size: 18px;
+      line-height: 30px;
+      margin-bottom: 20px;
+  }	
+
+  }
+
+  @media(max-width: 767px){
+    .resource-inner {
+        flex-direction: column;
+        padding: 0px;
+    }
+  .resource-inner .title {
+    flex: auto;
+    max-width: 100%;
+    padding-bottom: 30px;
+}
+    .resource-filter-outer .filter-seach-wrapper li {
+        margin: 0px 10px 20px 0px !important;
+    }
+    .resource-filter-outer .filter-seach-wrapper {
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .resource-filter-outer input#quicksearch {
+        width: 100%;
+    }
+    .resource-inner .content {
+        flex: 100%;
+        max-width: 100%;
+        padding: 0 0 0 0px;
+    }
+    .resource-main {
+    padding: 70px 15px;
+}
+    
+
+  }
+
+
+</style>
+
+
+<script>
+
+
+
+
+
+// refernces  - https://codepen.io/mjtweaver/pen/pEZYgQ
+// slider js 
+$(document).ready(function() {
+
+  var $slider = $('.slider');
+  var $progressBar = $('.progress');
+  var $progressBarLabel = $( '.slider__label' );
+
+  $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {   
+    
+//    add active class on click on arrow  
+    $(document).on("click","button.slick-next.slick-arrow",function() 
+    {
+          $(this).addClass('active-arrow');
+
+    });
+     $(document).on("click","button.slick-prev.slick-arrow",function() 
+    {
+          $(this).addClass('active-arrow');
+
+    });
+    var calc = ( (nextSlide) / (slick.slideCount-1) ) * 100;
+
+    $progressBar
+      .css('background-size', calc + '% 100%')
+      .attr('aria-valuenow', calc );
+
+    $progressBarLabel.text( calc + '% completed' );
+  });
+
+  $slider.slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    speed: 400,
+    arrows:true,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          speed: 400,
+          arrows:true,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          speed: 400,
+          arrows:true,
+        }
+      }
+    ]
+
+  });  
+});
+
+
+
+
+
+</script>

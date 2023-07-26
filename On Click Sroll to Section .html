@@ -1,0 +1,373 @@
+<div class="process-outer">
+<div class="container">
+<div class="process-inner">
+  <div class="left-right-wrapper">
+	<div class="left">
+	  <div class="process">
+		<div class="title">
+		  <h3>{{ module.left_group.list_group.title }}</h3>
+		</div>
+		<div class="list">
+		  <ul>
+			{% for item in module.left_group.list_group.add_process_list %}
+			<li> <a  class="js-anchor-link" href="#{{ item.section_id|cut(" ")|lower }}">{{ item.process_list }}</a></li>
+			{% endfor %}
+		  </ul>
+		</div>
+	  </div>
+	  <div class="checklist">
+		<div class="title">
+		  <h3>{{ module.left_group.list_group.title }}</h3>
+		</div>
+		<div class="list">
+		  <ul>
+			{% for item in module.left_group.list_group.add_check_list %}
+			<li> <a class="js-anchor-link" href="#{{ item.section_id_|cut(" ")|lower }}">{{ item.check_list }}</a></li>
+			{% endfor %}
+		  </ul>
+		</div>
+	  </div>
+	</div>
+	<div class="right">
+	  <div class="video-sec">
+		<div class="title">
+		  {{ module.right_group.video_title }}
+		</div>
+		<div class="video">
+		  {% if module.right_group.videoplayer_field.player_id %}
+		  {% set max_width = module.right_group.videoplayer_field.size_type == 'auto_custom_max' ? module.right_group.videoplayer_field.max_width : module.right_group.videoplayer_field.width %}
+		  {% set max_height = module.right_group.videoplayer_field.size_type == 'auto_custom_max' ? module.right_group.videoplayer_field.max_height : module.right_group.videoplayer_field.height %}
+		  {% video_player "embed_player"
+player_id={{ module.right_group.videoplayer_field.player_id }}
+type={{ module.right_group.videoplayer_field.player_type || 'scriptV4' }}
+full_width={{ module.right_group.videoplayer_field.size_type == 'auto_full_width' }},
+conversion_asset={{ module.right_group.videoplayer_field.conversion_asset|tojson|safe }}
+autoplay={{ module.right_group.videoplayer_field.autoplay }}
+hidden_controls={{ module.right_group.videoplayer_field.hide_controls }}
+loop={{ module.right_group.videoplayer_field.loop_video }}
+muted={{ module.right_group.videoplayer_field.mute_by_default }}
+%}
+		  {% endif %}
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+</div>
+<div class="scrollael-main">
+<div class="scrollable-outer">
+{% for item in module.scrollable_section_group.add_scrollable_section %}
+<div class="scrollable-sec section js-anchor-link " id="{{ item.section_id|cut(" ")|lower|cut("#")}}">
+  <div class="container">
+	<div class="left-sec">
+	  {{ item.left_section.content }}
+	</div>
+	<div class="right-sec">
+	  <div class="title">
+		{{ item.right_section.title_text }}
+	  </div>
+	  <div class="video">
+		{% if item.right_section.videoplayer_field_1.player_id %}
+		{% set max_width = item.right_section.videoplayer_field_1.size_type == 'auto_custom_max' ? item.right_section.videoplayer_field_1.max_width : item.right_section.videoplayer_field_1.width %}
+		{% set max_height = item.right_section.videoplayer_field_1.size_type == 'auto_custom_max' ? item.right_section.videoplayer_field_1.max_height : item.right_section.videoplayer_field_1.height %}
+		{% video_player "embed_player"
+	player_id={{ item.right_section.videoplayer_field_1.player_id }}
+	type={{ item.right_section.videoplayer_field_1.player_type || 'scriptV4' }}
+	full_width={{ item.right_section.videoplayer_field_1.size_type == 'auto_full_width' }},
+	conversion_asset={{ item.right_section.videoplayer_field_1.conversion_asset|tojson|safe }}
+	autoplay={{ item.right_section.videoplayer_field_1.autoplay }}
+	hidden_controls={{ item.right_section.videoplayer_field_1.hide_controls }}
+	loop={{ item.right_section.videoplayer_field_1.loop_video }}
+	muted={{ item.right_section.videoplayer_field_1.mute_by_default }}
+  %}
+		{% endif %}
+	  </div>
+	</div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+<style>
+
+
+.left-right-wrapper .right {
+width: 70%;
+}
+.left-right-wrapper .left {
+width: 30%;
+padding-right :40px;
+}
+.left-right-wrapper {
+display: flex;
+max-width: 1240px;
+margin: auto;
+}
+.left-right-wrapper .left .title h3 {
+color: #272d40;
+font-family: Open Sans Condensed,sans-serif;
+text-decoration: none;
+font-size: 24px;
+font-weight: 700;
+font-style: italic;
+}
+.list ul li a {
+margin: 0 0 1rem;
+font-size: 16px;
+line-height: 1.375;
+color: #0600ff;
+text-decoration: underline;
+font-style: italic;
+padding: 0px 0px 0px 0px;
+display: inline-block;
+font-weight: 600;
+}
+.list ul {
+list-style-type: none;
+padding: 0px;
+}
+.left-right-wrapper .right .title h3 {
+color: #272d40;
+font-family: Open Sans Condensed,sans-serif;
+font-weight: 700;
+text-decoration: none;
+font-size: 32px;
+font-style: italic;
+}
+.video-sec .title p {
+margin: 0 0 1rem;
+font-size: 16px;
+line-height: 1.375;
+font-style: italic;
+}
+.left-sec h4 {
+color: #272d40;
+display: block;
+font-family: Open Sans,sans-serif;
+font-size: 14px;
+font-weight: 700;
+margin: 0 0 0.75rem;
+}
+blockquote {
+border-left: 2px solid #f1eba4;
+margin: 0 0 1.4rem;
+padding-left: 15px;
+font-style: italic;
+}
+.left-sec h3 {
+color: #272d40;
+font-family: Open Sans Condensed,sans-serif;
+font-weight: 400;
+text-decoration: none;
+font-size: 32px;
+font-style: italic;
+}
+.left-sec ul li {
+font-size: 16px;
+color: #272d40;
+font-family: Open Sans,sans-serif;
+line-height: 1.4;
+margin: 0;
+word-break: break-word;
+font-weight: 400;
+}
+.scrollable-sec.section{
+padding: 80px 0px;
+}
+.scrollable-sec.section .left-sec h3 + h4 {
+font-size: 16px;
+line-height: 1.375;
+margin: 0 0 10px;
+font-style: italic;
+font-weight: 300;
+}
+.scrollable-sec.section .container {
+display: flex;
+}
+.scrollable-sec.section .right-sec {
+width: 70%;
+}
+.scrollable-sec.section .left-sec {
+width: 30%;
+padding-right: 40px;
+}
+.scrollable-sec.section .right-sec .title {
+margin: 0 0 2rem;
+font-size: 16px;
+line-height: 1.375;
+font-style: italic;
+}
+.scrollable-outer >div:nth-child(even) {
+background-color: rgba(248, 250, 252, 1) !important;
+}
+.process-outer {
+padding: 80px 0px;
+}
+.scrollable-sec.section img {
+width: 100%;
+margin-bottom: 20px;
+}
+
+/* media query start */
+@media(max-width: 767px){
+.left-right-wrapper, .scrollable-sec.section .container {
+flex-direction: column;
+}
+.left-right-wrapper .left, .left-right-wrapper .right, .scrollable-sec.section .left-sec, .scrollable-sec.section .right-sec {
+width: 100%;
+padding: 0px;
+}
+
+}
+
+.left-right-wrapper .right {
+    width: 70%;
+}
+.left-right-wrapper .left {
+    width: 30%;
+  padding-right :40px;
+}
+.left-right-wrapper {
+    display: flex;
+    max-width: 1240px;
+    margin: auto;
+}
+.left-right-wrapper .left .title h3 {
+    color: #272d40;
+    font-family: Open Sans Condensed,sans-serif;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+}
+.list ul li a {
+    margin: 0 0 1rem;
+    font-size: 16px;
+    line-height: 1.375;
+    color: #0600ff;
+    text-decoration: underline;
+    font-style: italic;
+    padding: 0px 0px 0px 0px;
+    display: inline-block;
+    font-weight: 600;
+}
+.list ul {
+    list-style-type: none;
+    padding: 0px;
+}
+.left-right-wrapper .right .title h3 {
+    color: #272d40;
+    font-family: Open Sans Condensed,sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 32px;
+    font-style: italic;
+}
+.video-sec .title p {
+    margin: 0 0 1rem;
+    font-size: 16px;
+    line-height: 1.375;
+    font-style: italic;
+}
+.left-sec h4 {
+    color: #272d40;
+    display: block;
+    font-family: Open Sans,sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+}
+blockquote {
+    border-left: 2px solid #f1eba4;
+    margin: 0 0 1.4rem;
+    padding-left: 15px;
+    font-style: italic;
+}
+.left-sec h3 {
+    color: #272d40;
+    font-family: Open Sans Condensed,sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+    font-size: 32px;
+    font-style: italic;
+}
+.left-sec ul li {
+    font-size: 16px;
+    color: #272d40;
+    font-family: Open Sans,sans-serif;
+    line-height: 1.4;
+    margin: 0;
+    word-break: break-word;
+  font-weight: 400;
+}
+.scrollable-sec.section{
+  padding: 80px 0px;
+}
+.scrollable-sec.section .left-sec h3 + h4 {
+    font-size: 16px;
+    line-height: 1.375;
+    margin: 0 0 10px;
+    font-style: italic;
+    font-weight: 300;
+}
+.scrollable-sec.section .container {
+    display: flex;
+}
+.scrollable-sec.section .right-sec {
+    width: 70%;
+}
+.scrollable-sec.section .left-sec {
+    width: 30%;
+  padding-right: 40px;
+}
+.scrollable-sec.section .right-sec .title {
+    margin: 0 0 2rem;
+    font-size: 16px;
+    line-height: 1.375;
+    font-style: italic;
+}
+.scrollable-outer >div:nth-child(even) {
+    background-color: rgba(248, 250, 252, 1) !important;
+}
+.process-outer {
+    padding: 80px 0px;
+}
+  .scrollable-sec.section img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* media query start */
+@media(max-width: 767px){
+.left-right-wrapper, .scrollable-sec.section .container {
+    flex-direction: column;
+}
+  .left-right-wrapper .left, .left-right-wrapper .right, .scrollable-sec.section .left-sec, .scrollable-sec.section .right-sec {
+    width: 100%;
+    padding: 0px;
+}
+
+}
+</style>
+
+
+<script>
+// source - 
+/*
+Smooth scroll functionality for anchor links (animates the scroll
+rather than a sudden jump in the page)
+*/
+$('.js-anchor-link').click(function(e){
+e.preventDefault();
+var target = $($(this).attr('href'));
+if(target.length){
+  var scrollTo = target.offset().top;
+  console.log(scrollTo);
+  $('body, html').animate({scrollTop: scrollTo+'px'}, 800);
+}
+});
+
+</script>
+

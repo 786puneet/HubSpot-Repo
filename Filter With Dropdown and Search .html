@@ -1,0 +1,293 @@
+<div class="resource-filter-outer">
+<div class="content-wrapper">
+<div class="resource-filter-inner">
+<div class="title">
+{{ module.title_text }}
+</div>
+<div class="filter-section">
+<div class="filter-seach-wrapper">
+<ul class="filters list-inline">
+<li>
+  <select class="selectFilter selectCategory" data-filter-group="category">
+	<option selected data-filter-value="*" value="">Topic</option>
+	{% for item in module.dropdown_group.add_topic_tag %}
+	<option  data-filter-value=".{{ item.topic_text|cut(" ")|lower }}" value=".{{ item.topic_text|cut(" ")|lower }}">{{ item.topic_text }}</option>
+	{% endfor %}
+  </select>
+</li>
+<li>
+  <select class="selectFilter selectProduct" data-filter-group="product">
+	<option selected data-filter-value="*" value="">Type</option>
+	{% for item in module.dropdown_group.add_type_here %}
+	<option data-filter-value=".{{ item.type_text|cut(" ")|lower }}" value=".{{ item.type_text|cut(" ")|lower }}">{{ item.type_text }}</option>
+	{% endfor %}
+  </select>
+</li>     
+</ul>
+<input type="text" class="quicksearch" id="quicksearch" placeholder="Search" />
+</div>
+
+<div id="portfolioContainer" class="portfolioGrid">
+{% for item in module.add_resource_here %}
+{% set href = item.resources_link.url.href %}
+{% if item.resources_link.url.type is equalto "EMAIL_ADDRESS" %}
+{% set href = "mailto:" + href %}
+{% endif %}
+<a href="{{ href }}"
+ {% if item.resources_link.open_in_new_tab %}target="_blank"{% endif %}
+ {% if item.resources_link.rel %}rel="{{ item.resources_link.rel }}"{% endif %}
+ >
+<div class="img-text-wrapper portfolioBox {{ item.select_topic|cut(" ")|lower }} {{ item.select_type|cut(" ")|lower }}">
+  <div class="img">
+	{% if item.image.src %}
+	{% set sizeAttrs = 'width="{{ item.image.width }}" height="{{ item.image.height }}"' %}
+	{% if item.image.size_type == 'auto' %}
+	{% set sizeAttrs = 'width="{{ item.image.width }}" height="{{ item.image.height }}" style="max-width: 100%; height: auto;"' %}
+	{% elif item.image.size_type == 'auto_custom_max' %}
+	{% set sizeAttrs = 'width="{{ item.image.max_width }}" height="{{ item.image.max_height }}" style="max-width: 100%; height: auto;"' %}
+	{% endif %}
+	{% set loadingAttr = item.image.loading != 'disabled' ? 'loading="{{ item.image.loading }}"' : '' %}
+	<img src="{{ item.image.src }}" alt="{{ item.image.alt }}" {{ loadingAttr }} {{ sizeAttrs }}>
+	{% endif %}
+  </div>
+  <div class="projectTitle" >
+	{{ item.title_text }}
+  </div>
+</div>
+</a>
+{% endfor %}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<style>
+
+.resource-filter-outer .filter-seach-wrapper {
+display: flex;
+justify-content: center;
+margin: 80px 0 40px 0;
+}
+.resource-filter-outer ul.filters.list-inline {
+padding: 0px;
+margin: 0px;
+list-style-type: none;
+}
+.resource-filter-outer ul.filters.list-inline  li {
+display: inline-block;
+}
+.resource-filter-outer ul.filters.list-inline  li select {
+color: #131313;
+font-family: Source Sans Pro;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-transform: capitalize;
+border: 0px;
+}
+.resource-filter-outer input#quicksearch {
+background: transparent;
+border: 0;
+border-bottom: 1px solid #a5a5a5;
+color: #a5a5a5;
+background-image: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/search-main.png);
+background-repeat: no-repeat;
+background-position: right center;
+}
+.resource-filter-outer select {
+color: #131313;
+font-family: Source Sans Pro;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-transform: capitalize;
+border: 0px;
+width: auto;
+background-color:transparent;
+}
+.resource-filter-outer div#portfolioContainer {
+display: flex;
+flex-wrap: wrap;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox {
+max-width: 33%;
+flex: 0 0 33%;
+position: unset !important;
+}
+.resource-filter-outer {
+padding: 100px 19px;
+background: #fa285a0d;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox {
+flex: 0 0 400px;
+max-width: 400px;
+position: unset!important;
+margin: 0 25px 50px;
+}
+/* .img img {
+height: 140px;
+object-fit: contain;
+width: 100%;
+} */
+.projectTitle p {
+color: #6D6D6D;
+font-family: Source Sans Pro;
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-transform: capitalize;
+margin: 25px 0 10px;
+min-height: 52px;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox img {
+width: 100%;
+}
+.projectTitle h4 {
+color: #131313;
+font-family: Source Sans Pro;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+text-transform: capitalize;
+margin: 0px;
+}
+.resource-filter-outer ul.filters.list-inline li {
+display: inline-block;
+margin-right: 40px;
+}
+/* .resource-filter-outer .img {
+width: 400px;
+border-radius: 10px;
+background: #FFF;
+box-shadow: 0px 0px 17.847951889038086px 0px rgba(0, 0, 0, 0.15);
+padding: 50px;
+} */
+.resource-filter-inner .title h2::after {
+background-color: #fff3f7;
+}
+.resource-filter-inner input#quicksearch::placeholder {
+color: #a5a5a5;
+}
+ul.filters.list-inline li select:focus-visible {
+outline: none;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox img {
+width: 100%;
+}
+.resource-filter-outer div#portfolioContainer .img {
+display: flex;
+align-items: center;
+justify-content: center;
+height :auto;
+}
+input#quicksearch:focus-visible {
+outline: none;
+}
+.resource-filter-outer div#portfolioContainer .img img {
+object-fit: contain;
+height :auto;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox img {
+width: 100%;
+}
+.projectTitle {
+padding: 0px 15px;
+}
+@media(max-width: 767px){
+.resource-filter-outer div#portfolioContainer {
+align-items: center;
+justify-content: center;
+padding: 0px 0px;
+}
+.resource-filter-outer div#portfolioContainer .portfolioBox {
+flex: auto;
+margin: 0px 0px 50px 0px;
+max-width: 100%;
+}
+.projectTitle p {
+min-height: unset;
+}
+.resource-filter-outer div#portfolioContainer a {
+width: 100%;
+}
+}
+
+
+</style>
+
+
+<script>
+// refrences - https://codepen.io/desandro/pen/qowMeB
+
+var qsRegex; // quick search regex
+var filters = {};
+var selectFilter; // filter value from <select>s
+
+var $grid = $('.portfolioGrid').isotope({
+itemSelector : '.portfolioBox',
+layoutMode: 'fitRows',
+filter: function() {
+// combine search & select filters
+var $this = $(this);
+var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+var selectResult = selectFilter ? $this.is( selectFilter ) : true;
+return searchResult && selectResult;
+}
+});
+
+// filter buttons
+$('select').change(function(){
+var $this = $(this);
+
+// store filter value in object
+// i.e. filters.color = 'red'
+var group = $this.attr('data-filter-group');
+
+filters[ group ] = $this.find(':selected').attr('data-filter-value');
+// convert object into array
+var filterValues = getObjectValues( filters );
+selectFilter = filterValues.join('');
+// console.log( selectFilter );
+$grid.isotope();
+});
+
+// use value of search field to filter
+var $quicksearch = $('.quicksearch').keyup( debounce( function() {
+qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+$grid.isotope();
+}, 200 ) );
+
+// -- utils --- //
+
+// fill-in for Object.values
+function getObjectValues( obj ) {
+var values = [];
+for ( var key in obj ) {
+values.push( obj[ key ] );
+}
+return values;
+}
+
+// debounce so filtering doesn't happen every millisecond
+function debounce( fn, threshold ) {
+var timeout;
+threshold = threshold || 100;
+return function debounced() {
+clearTimeout( timeout );
+var args = arguments;
+var _this = this;
+function delayed() {
+  fn.apply( _this, args );
+}
+timeout = setTimeout( delayed, threshold );
+};
+}
+
+
+</script>

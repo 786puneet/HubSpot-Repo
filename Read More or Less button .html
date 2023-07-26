@@ -1,0 +1,194 @@
+<div class="testimonial-outer">
+  <div class="content-wrapper">
+    <div class="testimonial-inner">
+      <div class="title">
+        {{ module.title }} 
+      </div>
+      <div class="testmonial-wrapper">
+        {% for item in module.add_testmorinal_here %}
+        <div class="review-text testimonial">
+          <div class="heading">
+            <h3>{{ item.title }}</h3>
+          </div>
+          <div class="testi-block">
+            <p>{{ item.testmorinal_content }}
+              {% if item.more_content %}<a class="lj-rep-btn">Go Beyond</a>{% endif %}
+              </p>
+             {% if item.more_content %}
+          <div class="moretext" style="display: none;" >
+            {{ item.more_content }}
+          </div>
+          {% endif %}
+          </div>
+          
+        </div>
+        {% endfor %}
+        <div class="btn purple">
+          {% set href = module.button_group_.button_link.url.href %}
+          {% if module.button_group_.button_link.url.type is equalto "EMAIL_ADDRESS" %}
+          {% set href = "mailto:" + href %}
+          {% endif %}
+          <a href="{{ href }}"
+             {% if module.button_group_.button_link.open_in_new_tab %}target="_blank"{% endif %}
+             {% if module.button_group_.button_link.rel %}rel="{{ module.button_group_.button_link.rel }}"{% endif %}
+             >
+            {{ module.button_group_.button_text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.testimonial-outer {
+  padding: 143px 0 127px;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-outer:before {
+    position: absolute;
+    content: '';
+    z-index: 2;
+    width: 87px;
+    height: 87px;
+    border: 5px solid #FA285A;
+    border-radius: 50%;
+    top: 485px;
+    left: 194px;
+}
+.testimonial-inner .title:before {
+    content: "";
+    height: 17px;
+    width: 17px;
+    position: absolute;
+    z-index: 2;
+    background-color: #FA285A;
+    border-radius: 50%;
+    left: 0;
+}
+.testimonial-inner .testmonial-wrapper {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+.testmonial-wrapper .testimonial:nth-child(odd) {
+  max-width: 934px;
+  margin: 0 auto;
+}
+.testimonial-inner .title {
+  margin: 0 0 153px;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-inner .title:before {
+  position: absolute;
+  content: '';
+  z-index: 2;
+  width: 17px;
+  height: 17px;
+  top: -9px;
+  left: 256px;
+}
+.testimonial-inner .title:after {
+  position: absolute;
+  content: '';
+  z-index: 2;
+  background: url('https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/The%20Advocate%20Corner%20Website%20Assets/Homepage%20Assets/Images/Rocket.jpg') no-repeat;
+  width: 248px;
+  height: 294px;
+  top: 13px;
+  right: -15px;
+}
+.testimonial h3 {
+  font-family: 'Capriola', sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  color: #F21749;
+  margin: 0 0 18px;
+  font-weight: 400;
+}
+.testimonial p {
+  color: #6D6D6D;
+  line-height: 32px;
+  margin: 0 0 39px;
+}
+.testimonial .lj-rep-btn {
+  color: #FA285A;
+  font-size: 16px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+.testimonial .lj-rep-btn:after {
+  content: '';
+  background: url(https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/The%20Advocate%20Corner%20Website%20Assets/Homepage%20Assets/Images/arrow-right-long.svg) no-repeat;
+  content: "";
+  display: inline-block; 
+  width: 17px;
+  height: 17px;
+  position: relative;
+  top: 2px;
+  left: 4px;
+}
+.testmonial-wrapper .btn {
+  text-align: center;
+}
+.testmonial-wrapper .testimonial:first-child {
+  position: relative;
+  z-index: 1;
+}
+.testmonial-wrapper .testimonial:first-child:after {
+  position: absolute;
+  content: '';
+  z-index: 2;
+  width: 25px;
+  height: 25px;
+  border: 3px solid #47BFB0;
+  border-radius: 50%;
+  left: -53px;
+  bottom: -19px;
+}
+.testmonial-wrapper .testimonial:first-child:before {
+  position: absolute;
+  content: '';
+  z-index: 2;
+  background: url('https://23463355.fs1.hubspotusercontent-na1.net/hubfs/23463355/The%20Advocate%20Corner%20Website%20Assets/Homepage%20Assets/Images/quote-icon.png') no-repeat;
+  width: 206px;
+  height: 142px;
+  top: -82px; 
+  right: 105px;
+}
+.testmonial-wrapper .testimonial:nth-child(even) {
+  background-color: #fef8fa;
+  padding: 74px 33px 43px 82px;
+  margin: 0 0 73px;
+}
+.testmonial-wrapper .testimonial:nth-child(even) p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+.testmonial-wrapper .testimonial:nth-child(even) p:last-child {
+  margin: 0;
+}
+@media(max-width :991px){
+   .testmonial-wrapper .testimonial:nth-child(2n){
+  padding: 20px;
+  }
+}
+@media(max-width: 767px){
+  .testimonial-inner .title:after, .testimonial-outer:before{
+  display: none;
+  }
+ 
+}
+
+</style>
+
+<script>
+
+  $('document').ready(function(){
+    $('.testi-block .lj-rep-btn').click(function(){
+       $(this).hide().parent().find('.moretext').slideToggle();
+    });
+  });
+</script>
+

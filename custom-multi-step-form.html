@@ -1,0 +1,608 @@
+<div class="multi-step-outer">
+  <div class="container">
+    <div class="multi-step-inner">
+      <div class="title">
+        <h2>{{ module.title }}</h2>
+      </div>
+
+
+      <!--       <div id="svg_wrap"></div> -->
+
+      <div class="custom-multi-step-baar">
+        <div class="card">
+          <div class="progress-track">
+            <ul id="progressbar">
+              {% for item in module.add_section %}
+              <li class="step0" id="{{ item.add_advance_id_ }}"><h3>{{ item.title }}</h3></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="step-sec-wrapper">
+        {% for item in module.add_section %}
+        <section  class="{% if loop.index == '1'%}sec-1{% endif %}{% if loop.index == '2'%}sec-2{% endif %}{% if loop.index == '3'%}sec-3{% endif %}{% if loop.index == '4'%}sec-4{% endif %}">    
+          <div class="form-field-wrapper">
+            {% if loop.index == '1'%}
+
+            <!--             <div class="name-email-wrapper">
+              <div class="form-block">
+                <label>First Name</label>
+                <input id="first_name" type="text"  />
+              </div>
+              <div class="form-block">
+                <label>Email</label>
+                <input id="last_name" name='last_name' type="email"  />
+              </div>
+            </div> -->
+            <div class="name-email-wrapper">
+              <!--               <div class="form-block">
+                <label>Mobile Phone</label>
+                <input id="number" name='number' type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+              </div> -->
+              <div class="form-block">
+                <label>Salary Expectation</label>
+                <input id="salary" name='salary' type="text" />
+              </div>
+            </div>
+            <div class="btn-wrapper">
+              <div class="button" id="next-1">Next</div>
+            </div>
+            {% endif %}
+          </div>
+          {% if loop.index == '2'%}
+          <div class="form-block">
+            <lable>Investment</lable>
+            <input id="investment" name='investment' type="text"/>
+          </div>
+          <div class="btn-wrapper">
+            <div class="button" id="prev-1">Previous</div>
+            <div class="button" id="next-2">Next</div>
+          </div>
+          {% endif %}
+
+          {% if loop.index == '3'%}
+          <div class="form-block">
+            <lable >Current Salary</lable>
+            <input id="current_salary" name='current_salary' type="text" />
+          </div>
+          <div class="btn-wrapper">
+            <div class="button" id="prev-2">Previous</div>
+            <div class="button" id="next-3">Next</div>
+          </div>
+          {% endif %}
+
+          {% if loop.index == '4'%}
+          <div class="hubspot-form-btn-wrapper">
+            <div class="hubspot-form">
+              {% form
+	form_to_use="{{ module.form.form_id }}"
+	response_response_type="{{ module.form.response_type }}"
+	response_message="{{ module.form.message }}"
+	response_redirect_id="{{ module.form.redirect_id }}"
+	response_redirect_url="{{module.form.redirect_url}}"
+	gotowebinar_webinar_key="{{ module.form.gotowebinar_webinar_key }}"
+%}
+            </div>
+            <div class="btn-wrapper">
+              <div class="button" id="prev-3">Previous</div>
+              <!--             <div class="button" id="submit">Submit</div>  -->
+            </div>
+          </div>
+
+          {% endif %}
+        </section>
+        {% endfor %}
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+<script>
+  $(window).load(function() {
+      $('.hubspot-form .hs-button').click(function(){
+        $('#prev-3').hide();
+      });
+    });
+  $(document).ready(function() {
+    $(".card ul li:first").addClass('active');
+    $('#next-1').click(function(){
+      //       $(".card ul li:first").removeClass('active');
+      $("#step2").addClass('active');
+      $(".sec-1").css('display','none');
+      $(".sec-2").css('display','block');
+      $('#prev-1').click(function(){
+        $('#step2').removeClass('active');
+        $('#step1').addClass('active');
+        $(".sec-2").css('display','none');
+        $(".sec-1").css('display','block');
+      })
+    });
+    $('#next-2').click(function(){
+      //       $("#step2").removeClass('active');
+      $("#step3").addClass('active');
+      $(".sec-2").css('display','none');
+      $(".sec-3").css('display','block');
+      $('#prev-2').click(function(){
+        $('#step3').removeClass('active');
+        $('#step2').addClass('active');
+        $(".sec-3").css('display','none');
+        $(".sec-2").css('display','block');
+      })
+    });
+    $('#next-3').click(function(){
+      //       $("#step3").removeClass('active');
+      $("#step4").addClass('active');
+      $(".sec-3").css('display','none');
+      $(".sec-4").css('display','block');
+      $('#prev-3').click(function(){
+        $('#step4').removeClass('active');
+        $('#step3').addClass('active');
+        $(".sec-4").css('display','none');
+        $(".sec-3").css('display','block');
+      })
+
+    });
+
+
+  
+
+    // get custom form values
+
+    $('#next-3').click(function(){
+      var salary =  $("#salary").val();
+      var investment =  $("#investment").val();
+      var current_salary =  $("#current_salary").val();
+
+      console.log(first_name);
+
+      //       // append custom form value in hubspot form
+
+      hbspt.forms.create({
+        region: "na1",
+        portalId: "304086",
+        formId: "f4689df0-c7d8-451b-92ec-602e3ea14141",
+        onFormSubmitted: function ($form) { 
+          $form.find('input[name="salary_expectation"]').val(salary);
+          $form.find('input[name="investment"').val(investment);
+          $form.find('input[name="current_salary"]').val(current_salary);
+
+        },
+      });
+    });
+
+  });
+
+
+
+
+</script>
+<style>
+  .multi-step-outer {
+    padding: 65px 0 70px;
+  }
+  .multi-step-inner h2 {
+    text-align: center;
+    font-size: 38px;
+    font-family: 'Nunito', sans-serif;
+    color: #131313;
+    font-weight: 600;
+    margin: 0 0 92px;
+  }
+  .custom-multi-step-baar .card {
+    margin: auto;
+    width: 100%;
+    border: none;
+  }
+
+  .sec-2 .form-block input,.sec-3 .form-block input,.sec-4 .form-block input {
+    background-color: #f9f9f9;
+    border: 0;
+    min-height: 70px;
+    padding: 6px 12px;
+    font-size: 16px;
+    display: block;
+
+  }
+  .sec-4 .form-block input{
+    width: calc(50% - 23px);
+  }
+  #progressbar li#step2.active::before
+  {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/investment-white.png);
+  }
+  #progressbar li#step3.active::before
+  {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/salry-white.png);
+  }
+
+  #progressbar li#step4.active::before
+  {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/return-white.png);
+  }
+  .sec-2 .btn-wrapper,.sec-3 .btn-wrapper,.sec-4 .btn-wrapper {
+    margin-top: 58px;
+  }
+  .sec-2 ,.sec-3,.sec-4
+  {
+    display: none;
+  }
+  .sec-2 .form-block lable,.sec-3 .form-block lable,.sec-4 label span {
+    display: block ;
+    font-size: 16px ;
+    color: #131313 ;
+    margin: 0 0 8px ;
+  }
+  section.sec-2,section.sec-3,section.sec-4   {
+    transform: none !important;
+    padding: 0px 39px;
+  }
+  .step-sec-wrapper .form-field-wrapper .btn-wrapper {
+    margin: 0px 0 0;
+    padding: 0 39px;
+  }
+  section.sec-4  .hs_submit.hs-submit {
+    display: inline-block;
+    float: left;
+    margin-top: 30px;
+  }
+  section.sec-4 .hs_submit.hs-submit .actions {
+    padding-bottom: 30px;
+}
+  section.sec-4 form .hs_mobilephone {
+    width: 100% !important;
+}
+  input:focus-visible {
+    outline: unset;
+}
+  @media(max-width:768px) {
+    .card {
+      width: 90%
+    }
+  }
+
+  .title {
+    color: rgb(252, 103, 49);
+    font-weight: 600;
+    margin-bottom: 2vh;
+    padding: 0 8%;
+    font-size: initial
+  }
+
+  #details {
+    font-weight: 400
+  }
+
+  .info {
+    padding: 5% 8%
+  }
+
+  .info .col-5 {
+    padding: 0
+  }
+
+  #heading {
+    color: grey;
+    line-height: 6vh
+  }
+
+  #progressbar {
+    margin-bottom: 3vh;
+    color: rgb(252, 103, 49);
+    padding-left: 0px;
+    margin-top: 3vh
+  }
+
+  #progressbar li {
+    list-style-type: none;
+    font-size: x-small;
+    width: 25%;
+    float: left;
+    position: relative;
+    font-weight: 400;
+    color: rgb(160, 159, 159)
+  }
+
+  #progressbar #step1:before,
+  #progressbar #step2:before,
+  #progressbar #step3:before,
+  #progressbar #step4:before {
+    content: "";
+    color: rgb(252, 103, 49);
+    width: 88px;
+    height: 88px;
+    margin-left: 0px !important;
+    position: absolute;
+    top: 0;
+    z-index: 999;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/expectation-black.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+  }
+  ul#progressbar li#step1::before {
+
+    background-image: url(https://www.finance4learning.com/hs-fs/hubfs/Finance%20Of%20Learning%20V2%20Page/Images/salary_expectations.png?width=45&height=39&name=salary_expectations.png);
+  }
+  #progressbar #step2:before {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/Investment.png);
+  }
+
+  #progressbar #step3:before {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/Current-Salary.png);
+  }
+
+  #progressbar #step4:before {
+    background-image: url(https://304086.fs1.hubspotusercontent-na1.net/hubfs/304086/Finance%20Of%20Learning%20V2%20Page/Images/Return.png);
+  }
+
+  /* #progressbar #step1:before {
+  content: "";
+  color: rgb(252, 103, 49);
+  width: 5px;
+  height: 5px;
+  margin-left: 0px !important
+  } */
+
+  /* #progressbar #step2:before {
+  content: "";
+  color: #fff;
+  width: 5px;
+  height: 5px;
+  margin-left: 32%
+  } */
+
+  /* #progressbar #step3:before {
+  content: "";
+  color: #fff;
+  width: 5px;
+  height: 5px;
+  margin-right: 32%
+  }
+
+  #progressbar #step4:before {
+  content: "";
+  color: #fff;
+  width: 5px;
+  height: 5px;
+  margin-right: 0px !important
+  } */
+
+  #progressbar li:before {
+    line-height: 29px;
+    display: block;
+    font-size: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    margin: auto;
+    z-index: -1;
+    margin-bottom: 1vh
+  }
+
+  #progressbar li:after {
+    content: '';
+    height: 8px;
+    background: #ddd;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    margin-bottom: 2vh;
+    top: 1px;
+    z-index: 1
+  }
+  #progressbar li:nth-child(2):after {
+    margin-right: auto
+  }
+
+  #progressbar li:nth-child(1):after {
+    margin: auto
+  }
+  #progressbar li:nth-child(3):after {
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 2;
+  }
+  #progressbar li:nth-child(4):after {
+    margin-left: auto;
+    width: 132%
+  }
+  #progressbar li.active {
+    color: black
+  }
+  #progressbar li.active:before,
+  #progressbar li.active:after {
+    background: rgb(81, 155, 251);
+  }
+  .icon {
+    background: red;
+    width: fit-content;
+  }
+  .progress-track h3 {
+    font-size: 24px;
+    color: #131313;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    top: 74px;
+  }
+  .step-sec-wrapper {
+    margin: 5.5rem 0 0;
+  }
+  .step-sec-wrapper .form-field-wrapper .name-email-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 0 18px;
+    padding: 0 39px;
+  }
+  .name-email-wrapper label {
+    display: block;
+    font-size: 16px;
+    color: #131313;
+    margin: 0 0 8px;
+  }
+  .step-sec-wrapper .name-email-wrapper .form-block, section.sec-2 input, section.sec-3 input {
+    width: 100%;
+  }
+  .step-sec-wrapper .name-email-wrapper input {
+    background-color: #f9f9f9;
+    border: 0;
+    min-height: 70px;
+    padding: 6px 12px;
+    font-size: 16px;
+    width: 100%;
+  }
+  .step-sec-wrapper .name-email-wrapper input:focus {
+    outline: none;
+  }
+  .step-sec-wrapper .form-field-wrapper .btn-wrapper {
+    margin: 0px 0 0;
+  }
+  .btn-wrapper .button {
+    border: 0;
+    border-radius: 0;
+    background-color: #004999;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 190px;
+    padding: 20px 0;
+  }
+  form.hs-form .hs-form-field input {
+    background-color: #f9f9f9;
+    border: 0px;
+  }
+  .hubspot-form-btn-wrapper .hs_submit.hs-submit input.hs-button.primary.large {
+    background-color: #004999;
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px !important;
+    font-weight: 600;
+    min-width: 190px;
+    padding: 20px 50px!important;
+    margin-right: 22px;
+  }
+  .step-sec-wrapper .btn-wrapper {
+    margin: 0px !important;
+  }
+  .step-sec-wrapper .btn-wrapper .button {
+    margin-top: 30px;
+  }
+  @media(max-width:991px) {
+    .multi-step-outer .container {
+      max-width: none;
+    }
+    .progress-track h3 {
+      font-size: 20px;
+    }
+  }
+  @media(max-width:767px) {
+    .step-sec-wrapper .form-field-wrapper .name-email-wrapper {
+      flex-direction: column;
+    }
+    .progress-track h3 {
+      font-size: 18px;
+    }
+    #progressbar {
+      margin: 0;
+    }
+    #progressbar #step1:before,
+    #progressbar #step2:before,
+    #progressbar #step3:before,
+    #progressbar #step4:before {
+      width: 70px;
+      height: 70px;
+      margin: 0;
+      top: 10%;
+    }
+    .progress-track h3 {
+      top: 60px;
+    }
+    .step-sec-wrapper {
+      margin: 5rem 0 0;
+    }
+    .step-sec-wrapper .form-field-wrapper .name-email-wrapper {
+      padding: 0;
+      margin: 0;
+    }
+    .step-sec-wrapper .name-email-wrapper .form-block {
+      width: 100%;
+    }
+    .step-sec-wrapper .name-email-wrapper input, .sec-2 .form-block input, .sec-3 .form-block input, .sec-4 .form-block input {
+      width: 100%;
+      min-height: 41px;
+      padding: 6px 12px;
+      margin: 0px 0px 20px 0px;
+    }
+    .step-sec-wrapper .form-field-wrapper .btn-wrapper {
+      margin: 0;
+      padding: 0px;
+    }
+    .step-sec-wrapper .hubspot-form-btn-wrapper .input input {
+      width: 100% !important;
+    }
+    .step-sec-wrapper .hubspot-form-btn-wrapper .input {
+      margin: 0px !important;
+    }
+    .step-sec-wrapper .btn-wrapper .button, div.hubspot-form-btn-wrapper .hs_submit.hs-submit input.hs-button.primary.large {
+      margin-top: 20px;
+      min-width: unset;
+      padding: 11px 36px;
+      font-size: 14px;
+    }
+    #progressbar li:after{
+      height: 4px;
+    }
+    section.sec-2, section.sec-3, section.sec-4 {
+      padding: 0px;
+    }
+    .multi-step-inner .hubspot-form-btn-wrapper label span {
+      font-size: 14px;
+    }
+    .multi-step-outer {
+      padding: 40px 0 50px;
+    }
+    .multi-step-inner h2 {
+      font-size: 32px;
+      margin: 0 0 62px;
+    }
+    .multi-step-outer form fieldset .field.hs-form-field {
+      margin-bottom: 10px;
+    }
+    .step-sec-wrapper .btn-wrapper .button, div.hubspot-form-btn-wrapper .hs_submit.hs-submit input.hs-button.primary.large {
+      margin-top: 2px;
+      min-width: unset !important;
+      padding: 14px 36px !important;
+      font-size: 14px !important;
+      width: unset !important;
+      line-height: 14px !important;
+    }
+    .step-sec-wrapper .hs_submit.hs-submit {
+      margin-top: 0;
+    }  
+  }
+  @media(max-width:479px) {
+    .step-sec-wrapper {
+      margin: 3rem 0 0;
+    }
+    #progressbar #step1:before,
+    #progressbar #step2:before,
+    #progressbar #step3:before,
+    #progressbar #step4:before {
+      width: 40px;
+      height: 40px;
+      background-size: 20px;
+    }
+    .progress-track h3 {
+      font-size: 12px;
+      top: 40px;
+    }
+  }
+</style>

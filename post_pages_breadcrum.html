@@ -1,0 +1,60 @@
+   
+	{# Set empty array #}
+{% set slug = [] %}
+{# Get absolute url of current page and split #}
+{% for item in content.absolute_url|split('/') %}
+{# Remove the first 2 items. This way it wil remove the items 'https' and 'www.sample.com' #}
+{% if loop.index != 1 && loop.index != 2 %}
+{# Append item to the slug #}
+{% do slug.append(item) %}  
+{% endif %}
+{% endfor %}
+
+{# Get path. First try to get the slug. As fallback request path #}
+{% set breadcrumbs = slug || request.path|split('/') %}
+{# Set seperator #}
+{% set seperator = '<span class="seperator">/</span>' %}
+{# Set Home label #}
+{% set home_label = '<i class="fa-solid fa-house"></i>' %}
+
+{# Set base for page urls #}
+{% set page_url = {'value' : request.scheme ~ '://'} %}
+{# Get domain #}
+{% set domain = request.domain %}
+{# Add domain to the page url #}
+{% do page_url.update({'value' : page_url['value'] ~ domain ~ '/'}) %}
+
+<ul class="vet-breadcrumbs"> 
+
+{# Home #}
+<li>
+<a href="https://{{ domain }}/">
+  <span>{{ home_label || '<i class="fa-solid fa-house"></i>' }}</span>
+</a>
+<meta/>
+</li>
+{{ seperator }}
+
+{# Pages #}
+{% for breadcrumb in breadcrumbs %}
+
+{# Laste page (No link) #}
+{% if loop.last %}
+  <li>
+	<span>{{ breadcrumb|replace('-',' ')|capitalize }}</span>
+  </li>
+{% else %}
+  
+  {# Page #}
+  {% do page_url.update({'value' : page_url['value'] ~ breadcrumb ~ '/'}) %}
+  <li>
+	<a href="{{ page_url['value'] }}">
+	  <span>{{ breadcrumb|replace('-',' ')|capitalize }}</span>
+	</a>
+  
+  </li>
+  {{ seperator }}
+
+{% endif %}
+{% endfor %}
+</ul>

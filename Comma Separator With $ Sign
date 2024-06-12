@@ -1,0 +1,62 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<div class="form-sec-outer-main">
+  {% form
+	form_to_use="{{ module.form_field.form_id }}"
+	response_response_type="{{ module.form_field.response_type }}"
+	response_message="{{ module.form_field.message }}"
+	response_redirect_id="{{ module.form_field.redirect_id }}"
+	response_redirect_url="{{module.form_field.redirect_url}}"
+	gotowebinar_webinar_key="{{ module.form_field.gotowebinar_webinar_key }}"
+%}
+</div>
+
+<script>
+ setTimeout(function() {
+  (function init() {
+    // Ensure the DOM is fully loaded before adding event listeners
+    $(document).ready(function() {
+      // Add event listeners for keyup and blur events on text inputs within form elements
+      $('.form-sec-outer-main .input input[type=text]').on('change keyup blur', _formatInput);
+    });
+  }());
+
+  function _formatInput(e) {
+    var $el = $(this);
+    var dollars = $el.val();
+    console.log(dollars); // Log the current input value for debugging
+
+    // Ignore arrow key events
+    if ([37, 38, 39, 40].indexOf(e.which) > -1) {
+      return;
+    }
+
+    // Format the input value as dollars
+    dollars = formatDollars(dollars);
+
+    // On blur event, remove the decimal part if any
+    if (e.type === 'blur') {
+      dollars = dollars.split('.')[0];
+    }
+
+    // Set the formatted value back to the input
+    $el.val(dollars);
+  }
+
+  function formatDollars(dollars, separator) {
+    // Split the input value into integer and decimal parts
+    var parts = dollars.toString().split('.');
+    var separator = separator || ',';
+
+    // Format the integer part with commas
+    parts[0] = parts[0]
+      .toString() // Ensure it is a string
+      .replace(/\D*/g, '') // Remove all non-digit characters
+      .replace(/\B(?=(\d{3})+(?!\d))/g, separator); // Add commas
+
+    // Join the parts and add the dollar sign
+    dollars = '$' + parts.join('.');
+
+    return dollars;
+  }
+}, 2500);
+</script>

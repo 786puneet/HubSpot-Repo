@@ -1,0 +1,59 @@
+{% require_css %}
+<style>
+	{% scope_css %}
+
+	{% end_scope_css %}
+</style>
+{% end_require_css %}
+<div class="tag-filter">
+	<div class="connatiner">
+		<div class="blog-tag-filter">
+			{% set my_tags = blog_tags(module.blog_field, 250) %}
+			<select id="tag-filter" class="filters-select">
+				<option selected data-filter="*" >Select Tag</option>
+				{% for item in my_tags %}
+				<option class="button-group filters-button-group" value=".{{ item|lower }}" >{{ item }}</option>
+				{% endfor %}
+			</select>
+
+			{% set rec_posts = blog_recent_posts(module.blog_field, 100) %}
+			<div class="grid">
+			{% for post in rec_posts %}
+			<article class="blog-related-posts__post element-item {% for tags in post.tag_list %} {{ tags.name }} {% endfor %}" aria-label="Blog post summary: {{ post.name }}">
+				{% if post.featured_image %}
+				<a class="blog-related-posts__post-image-wrapper" href="{{ post.absolute_url }}" aria-label="{% if post.featured_image_alt_text %} Featured image: {{ post.featured_image_alt_text }} - {% endif %}Read full post: {{ post.name }}">
+					<img class="blog-related-posts__image" src="{{ post.featured_image }}" loading="lazy" width="352" alt="{{ post.featured_image_alt_text }}">
+				</a>
+				{% endif %}
+				<div class="blog-topics">
+					{% for tags in post.tag_list %}
+					<a class="blog-post__tag-link" href="{{ blog_tag_url(group.id, tags.slug) }}">{{ tags.name }}</a>{% if not loop.last %},{% endif %}
+					{% endfor %}
+				</div>
+				<div class="blog-related-posts__content">
+					<h3 class="blog-related-posts__title">
+						<a class="blog-related-posts__title-link" href="{{ post.absolute_url }}">{{ post.name }}</a>
+					</h3>
+				</div>
+			</article>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% require_js position="footer" %}
+{{require_js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js')}}
+{{require_js('https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js')}}
+<script>
+var $grid = $('.grid').isotope({
+  itemSelector: '.element-item',
+  layoutMode: 'fitRows'
+});
+$('.filters-select').on( 'change', function() {
+  var filterValue = this.value;
+  $grid.isotope({ filter: filterValue });
+});
+</script>
+{% end_require_js %}
